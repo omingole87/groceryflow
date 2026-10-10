@@ -1,0 +1,27 @@
+{
+  "name": "groceryflow",
+  "version": "1.0.0",
+  "description": "Grocery delivery onboarding & checkout with server-side step state machine and atomic slot capacity locks",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm --prefix backend run dev",
+    "dev:client": "npm --prefix frontend run dev",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build",
+    "seed": "npm --prefix backend run seed",
+    "test:concurrency": "npm --prefix backend run test:concurrency"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  },
+  "keywords": [
+    "grocery",
+    "onboarding",
+    "state-machine",
+    "postgresql",
+    "react",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC"
+}
