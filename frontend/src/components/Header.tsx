@@ -44,12 +44,12 @@ export const Header: React.FC = () => {
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-extrabold text-xl tracking-tight text-slate-900">GroceryFlow</span>
-                <span className="hidden sm:inline-block text-[11px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                  Frictionless Checkout
+                <span className="text-[11px] font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-300">
+                  by OM INGOLE
                 </span>
               </div>
-              <p className="text-xs text-slate-500 hidden sm:block">
-                Start cart on step 1 • 1 question per screen • Never lose a session
+              <p className="text-xs text-slate-600 hidden sm:block">
+                Designed &amp; Developed by <span className="font-bold text-slate-900">OM INGOLE</span> • 2nd Year IT @ SSGMCE
               </p>
             </div>
           </div>
