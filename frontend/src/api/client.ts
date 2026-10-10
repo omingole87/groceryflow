@@ -1,3 +1,5 @@
+import { mockBackend } from './mockEngine';
+
 const SESSION_STORAGE_KEY = 'groceryflow_session_id';
 
 export function getStoredSessionId(): string | null {
@@ -43,83 +45,128 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
 export const api = {
   // Session & Wizard State
   async getSession(sessionId?: string) {
-    const query = sessionId ? `?sessionId=${encodeURIComponent(sessionId)}` : '';
-    const res = await request<{ success: boolean; data: any }>(`/api/session${query}`);
-    if (res.data?.sessionId) {
-      setStoredSessionId(res.data.sessionId);
+    try {
+      const query = sessionId ? `?sessionId=${encodeURIComponent(sessionId)}` : '';
+      const res = await request<{ success: boolean; data: any }>(`/api/session${query}`);
+      if (res.data?.sessionId) {
+        setStoredSessionId(res.data.sessionId);
+      }
+      return res.data;
+    } catch {
+      return mockBackend.getSession();
     }
-    return res.data;
   },
 
   async saveStepAnswer(step: string, payload: any) {
-    const res = await request<{ success: boolean; data: any }>('/api/session/answers', {
-      method: 'POST',
-      body: JSON.stringify({ step, payload }),
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/session/answers', {
+        method: 'POST',
+        body: JSON.stringify({ step, payload }),
+      });
+      return res.data;
+    } catch {
+      return mockBackend.saveAnswer(step, payload);
+    }
   },
 
   async resetSession() {
-    const res = await request<{ success: boolean; data: any }>('/api/session/reset', {
-      method: 'POST',
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/session/reset', {
+        method: 'POST',
+      });
+      return res.data;
+    } catch {
+      return mockBackend.resetSession();
+    }
   },
 
   // Grocery Catalog & Cart
   async getProducts() {
-    const res = await request<{ success: boolean; data: any[] }>('/api/cart/products');
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any[] }>('/api/cart/products');
+      return res.data;
+    } catch {
+      return mockBackend.getProducts();
+    }
   },
 
   async getCart() {
-    const res = await request<{ success: boolean; data: any }>('/api/cart');
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/cart');
+      return res.data;
+    } catch {
+      return mockBackend.getCart();
+    }
   },
 
   async addToCart(productId: string, quantity = 1) {
-    const res = await request<{ success: boolean; data: any }>('/api/cart/items', {
-      method: 'POST',
-      body: JSON.stringify({ productId, quantity }),
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/cart/items', {
+        method: 'POST',
+        body: JSON.stringify({ productId, quantity }),
+      });
+      return res.data;
+    } catch {
+      return mockBackend.addToCart(productId, quantity);
+    }
   },
 
   async updateCartItem(productId: string, quantity: number) {
-    const res = await request<{ success: boolean; data: any }>(`/api/cart/items/${productId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ quantity }),
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>(`/api/cart/items/${productId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ quantity }),
+      });
+      return res.data;
+    } catch {
+      return mockBackend.updateCartItem(productId, quantity);
+    }
   },
 
   async removeFromCart(productId: string) {
-    const res = await request<{ success: boolean; data: any }>(`/api/cart/items/${productId}`, {
-      method: 'DELETE',
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>(`/api/cart/items/${productId}`, {
+        method: 'DELETE',
+      });
+      return res.data;
+    } catch {
+      return mockBackend.removeFromCart(productId);
+    }
   },
 
   // Delivery Slots
   async getSlots() {
-    const res = await request<{ success: boolean; data: any[] }>('/api/slots');
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any[] }>('/api/slots');
+      return res.data;
+    } catch {
+      return mockBackend.getSlots();
+    }
   },
 
   async resetSlot(slotId: string, capacityUsed = 0) {
-    const res = await request<{ success: boolean; data: any[] }>(`/api/slots/${slotId}/reset`, {
-      method: 'POST',
-      body: JSON.stringify({ capacityUsed }),
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any[] }>(`/api/slots/${slotId}/reset`, {
+        method: 'POST',
+        body: JSON.stringify({ capacityUsed }),
+      });
+      return res.data;
+    } catch {
+      return mockBackend.resetSlot(slotId, capacityUsed);
+    }
   },
 
   async testSlotReservation(slotId: string) {
-    const res = await request<{ success: boolean; data: any }>('/api/slots/reserve-test', {
-      method: 'POST',
-      body: JSON.stringify({ slotId }),
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/slots/reserve-test', {
+        method: 'POST',
+        body: JSON.stringify({ slotId }),
+      });
+      return res.data;
+    } catch (err: any) {
+      if (err?.status === 409) throw err;
+      return mockBackend.testSlotReservation(slotId);
+    }
   },
 
   // Orders
@@ -129,29 +176,45 @@ export const api = {
     contactPhone?: string;
     paymentMethod: string;
   }) {
-    const res = await request<{ success: boolean; data: any }>('/api/order/checkout', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    });
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/order/checkout', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      return res.data;
+    } catch {
+      return mockBackend.checkout(payload);
+    }
   },
 
   async getOrder(orderId: string) {
-    const res = await request<{ success: boolean; data: any }>(`/api/order/${orderId}`);
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>(`/api/order/${orderId}`);
+      return res.data;
+    } catch {
+      return mockBackend.getOrder(orderId);
+    }
   },
 
   // Analytics
   async getFunnelMetrics() {
-    const res = await request<{ success: boolean; data: any }>('/api/analytics/funnel');
-    return res.data;
+    try {
+      const res = await request<{ success: boolean; data: any }>('/api/analytics/funnel');
+      return res.data;
+    } catch {
+      return mockBackend.getFunnelMetrics();
+    }
   },
 
   async trackEvent(step: string, eventType: string, metadata?: any) {
-    const res = await request<{ success: boolean; message: string }>('/api/analytics/event', {
-      method: 'POST',
-      body: JSON.stringify({ step, eventType, metadata }),
-    });
-    return res;
+    try {
+      const res = await request<{ success: boolean; message: string }>('/api/analytics/event', {
+        method: 'POST',
+        body: JSON.stringify({ step, eventType, metadata }),
+      });
+      return res;
+    } catch {
+      return mockBackend.trackEvent(step, eventType, metadata);
+    }
   },
 };
