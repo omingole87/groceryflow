@@ -1,5 +1,6 @@
 # GroceryFlow 🛒
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Launch%20Web%20App-22c55e?style=for-the-badge&logo=googlechrome&logoColor=white)](https://omingole87.github.io/groceryflow/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -7,6 +8,7 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
 
+> 🚀 **Live Interactive Web App:** [**https://omingole87.github.io/groceryflow/**](https://omingole87.github.io/groceryflow/)  
 > **Grocery Delivery Onboarding & Checkout Flow**  
 > *Zero upfront friction. Cart works from Step 1. One question per screen. Never lose a partially-completed session.*
 
