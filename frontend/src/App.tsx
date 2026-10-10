@@ -37,7 +37,7 @@ const MainApp: React.FC = () => {
       <FunnelAnalyticsModal />
       <ConcurrencyTesterModal />
 
-      {/* Architectural Specs Footer */}
+      {/* Architectural Specs & Author Footer */}
       <footer className="bg-white border-t border-slate-200 py-6 text-xs text-slate-500 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-2">
@@ -53,6 +53,17 @@ const MainApp: React.FC = () => {
             <span className="text-emerald-700 font-semibold">
               Transactional Capacity Lock: Active
             </span>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-slate-600">
+          <div>
+            Designed &amp; Developed by <a href="https://github.com/omingole87" target="_blank" rel="noopener noreferrer" className="font-bold text-slate-900 hover:text-emerald-600 transition-colors">OM INGOLE</a> • 2nd Year IT @ SSGMCE
+          </div>
+          <div className="flex items-center space-x-3 text-[11px] text-slate-500">
+            <a href="https://github.com/omingole87/groceryflow" target="_blank" rel="noopener noreferrer" className="hover:text-slate-800 hover:underline">GitHub Repository</a>
+            <span>•</span>
+            <a href="https://github.com/omingole87" target="_blank" rel="noopener noreferrer" className="hover:text-slate-800 hover:underline">Profile</a>
           </div>
         </div>
       </footer>
